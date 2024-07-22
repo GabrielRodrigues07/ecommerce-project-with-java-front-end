@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CartItem} from "../common/cart-item";
 import {Subject} from "rxjs";
 
@@ -13,7 +13,8 @@ export class CartService {
 
   totalQuantity: Subject<number> = new Subject<number>();
 
-  constructor() { }
+  constructor() {
+  }
 
   addToCart(theCartItem: CartItem) {
 
@@ -24,7 +25,7 @@ export class CartService {
     if (this.cartItems.length > 0) {
       // find the item in the cart based on item id
 
-      existingCartItem = this.cartItems.find( theCartItem => theCartItem.id === theCartItem.id )!;
+      existingCartItem = this.cartItems.find(cartItem => theCartItem.id === cartItem.id)!;
       //check if we found it
       alreadyExistsInCart = (existingCartItem != undefined);
     }
@@ -32,8 +33,7 @@ export class CartService {
     if (alreadyExistsInCart) {
       // increment the quantity
       existingCartItem.quantity++;
-    }
-    else {
+    } else {
       // just add item to the array
       this.cartItems.push(theCartItem);
     }
@@ -43,7 +43,7 @@ export class CartService {
 
   }
 
-  private computerCartTotals() {
+  computerCartTotals() {
     let totalPriceValue: number = 0;
     let totalQuantityValue: number = 0;
 
@@ -61,7 +61,7 @@ export class CartService {
     this.logCartData(totalPriceValue, totalQuantityValue);
   }
 
-  private logCartData(totalPriceValue: number, totalQuantityValue: number) {
+  logCartData(totalPriceValue: number, totalQuantityValue: number) {
     console.log('Contents of the cart')
     for (let tempCartItem of this.cartItems) {
       const subTotalPrice = tempCartItem.quantity * tempCartItem.unitPrice;
