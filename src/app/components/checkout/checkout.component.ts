@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-checkout',
@@ -8,8 +8,12 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 })
 export class CheckoutComponent implements OnInit {
 
-  checkoutFormGroup: FormGroup | undefined;
-  constructor(private formBuilder: FormBuilder) { }
+  checkoutFormGroup: FormGroup;
+  constructor(private formBuilder: FormBuilder) {
+    this.checkoutFormGroup = formBuilder.group({
+      title: formBuilder.control('initial value', Validators.required)
+    });
+  }
 
   ngOnInit(): void {
 
@@ -20,6 +24,8 @@ export class CheckoutComponent implements OnInit {
         email: ['']
       })
     });
+
+    this.checkoutFormGroup.reset({title: 'new value'})
   }
 
 }
