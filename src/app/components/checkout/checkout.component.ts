@@ -28,4 +28,9 @@ export class CheckoutComponent implements OnInit {
     this.checkoutFormGroup.reset({title: 'new value'})
   }
 
+  onSubmit() {
+    console.log("Handling the submit button");
+    console.log(this.checkoutFormGroup.get('customer')?.value);
+  }
+
 }
