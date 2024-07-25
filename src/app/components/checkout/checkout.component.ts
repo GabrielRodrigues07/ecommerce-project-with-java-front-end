@@ -55,4 +55,13 @@ export class CheckoutComponent implements OnInit {
     console.log(this.checkoutFormGroup.get('customer')?.value);
   }
 
+  copyShippingAddressToBillingAddress(event: Event) {
+    const isChecked = (<HTMLInputElement>event.target).checked;
+
+    if (isChecked) {
+      this.checkoutFormGroup.controls['billingAddress'].setValue(this.checkoutFormGroup.controls['shippingAddress'].value)
+    }else {
+      this.checkoutFormGroup.controls['billingAddress'].reset();
+    }
+  }
 }
