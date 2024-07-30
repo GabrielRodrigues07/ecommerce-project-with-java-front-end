@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Luv2ShopFormService} from "../../services/luv2-shop-form.service";
 
 @Component({
   selector: 'app-checkout',
@@ -13,7 +14,11 @@ export class CheckoutComponent implements OnInit {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
-  constructor(private formBuilder: FormBuilder) {
+  creditCartYears: number[] = [];
+  creditCartMonths: number[] = [];
+
+  constructor(private formBuilder: FormBuilder,
+              private luv2ShopFormService: Luv2ShopFormService) {
     this.checkoutFormGroup = formBuilder.group({
       title: formBuilder.control('initial value', Validators.required)
     });
@@ -51,7 +56,29 @@ export class CheckoutComponent implements OnInit {
       })
     });
 
-    this.checkoutFormGroup.reset({title: 'new value'})
+    this.checkoutFormGroup.reset({title: 'new value'});
+
+    // populate credit cart months
+    const startMonth: number = new Date().getMonth();
+    console.log("startMonth: " + startMonth);
+
+    //TODO: ajustar metodo getCreditCardMonths para mostrar todos os menos caso o ano não seja igual ao ano atual
+
+    this.luv2ShopFormService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        console.log("Retrieved credit cart months: " + JSON.stringify(data));
+        this.creditCartMonths = data;
+      }
+    );
+
+    // populate credit cart years
+
+    this.luv2ShopFormService.getCreditCardYears().subscribe(
+      data => {
+        console.log("Retrieved credit cart years: " + JSON.stringify(data));
+        this.creditCartYears = data;
+      }
+    );
   }
 
   onSubmit() {
