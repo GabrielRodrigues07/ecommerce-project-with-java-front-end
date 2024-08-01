@@ -62,8 +62,6 @@ export class CheckoutComponent implements OnInit {
     const startMonth: number = new Date().getMonth();
     console.log("startMonth: " + startMonth);
 
-    //TODO: ajustar metodo getCreditCardMonths para mostrar todos os menos caso o ano não seja igual ao ano atual
-
     this.luv2ShopFormService.getCreditCardMonths(startMonth).subscribe(
       data => {
         console.log("Retrieved credit cart months: " + JSON.stringify(data));
@@ -94,5 +92,32 @@ export class CheckoutComponent implements OnInit {
     }else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
     }
+  }
+
+  handleMonthsAndYears() {
+
+    const creditCardFormGroup = this.checkoutFormGroup.get("creditCard");
+    let creditCard = creditCardFormGroup?.value;
+
+    const currentYear: number = new Date().getFullYear();
+    const selectedYear: number = Number(creditCard.expirationYear);
+
+    // if current year equals the selected year, then start with the current month
+
+    let startMonth: number;
+
+    if (currentYear == selectedYear) {
+      startMonth = new Date().getMonth() + 1;
+    }
+    else {
+      startMonth = 1;
+    }
+
+    this.luv2ShopFormService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        console.log("Retrieved credit cart months: " + JSON.stringify(data));
+        this.creditCartMonths = data;
+      }
+    )
   }
 }
