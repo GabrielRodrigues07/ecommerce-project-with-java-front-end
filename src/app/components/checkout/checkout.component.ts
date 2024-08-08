@@ -104,8 +104,13 @@ export class CheckoutComponent implements OnInit {
 
     if (isChecked) {
       this.checkoutFormGroup.controls['billingAddress'].setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
+
+      this.billingAddressStates = this.shippingAddressStates;
+
     }else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
+
+      this.billingAddressStates = [];
     }
   }
 
@@ -141,8 +146,8 @@ export class CheckoutComponent implements OnInit {
     const countryCode = formGroup?.value.country.code;
     const countryName = formGroup?.value.country.name;
 
-    console.log(`{formGroupName} country code: ${countryCode}`);
-    console.log(`{formGroupName} country name: ${countryName}`);
+    console.log(`${formGroupName} country code: ${countryCode}`);
+    console.log(`${formGroupName} country name: ${countryName}`);
 
     this.luv2ShopFormService.getStates(countryCode).subscribe(
       data => {
