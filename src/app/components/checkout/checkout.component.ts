@@ -53,45 +53,9 @@ export class CheckoutComponent implements OnInit {
         ])
       }),
 
-      shippingAddress: this.formBuilder.group({
-        country: new FormControl('', [Validators.required]),
-        street: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Luv2ShopValidators.notOnlyWhitespace
-        ]),
-        city: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Luv2ShopValidators.notOnlyWhitespace
-        ]),
-        state: new FormControl('', [Validators.required]),
-        zipCode: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Luv2ShopValidators.notOnlyWhitespace
-        ])
-      }),
+      shippingAddress: this.getAddress(),
 
-      billingAddress: this.formBuilder.group({
-        country: new FormControl('', [Validators.required]),
-        street: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Luv2ShopValidators.notOnlyWhitespace
-        ]),
-        city: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Luv2ShopValidators.notOnlyWhitespace
-        ]),
-        state: new FormControl('', [Validators.required]),
-        zipCode: new FormControl('', [
-          Validators.required,
-          Validators.minLength(3),
-          Luv2ShopValidators.notOnlyWhitespace
-        ])
-      }),
+      billingAddress: this.getAddress(),
 
       creditCard: this.formBuilder.group({
         cardType: new FormControl('', [Validators.required]),
@@ -140,6 +104,28 @@ export class CheckoutComponent implements OnInit {
         this.countries = data;
       }
     );
+  }
+
+  private getAddress() {
+    return this.formBuilder.group({
+      country: new FormControl('', [Validators.required]),
+      street: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Luv2ShopValidators.notOnlyWhitespace
+      ]),
+      city: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Luv2ShopValidators.notOnlyWhitespace
+      ]),
+      state: new FormControl('', [Validators.required]),
+      zipCode: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Luv2ShopValidators.notOnlyWhitespace
+      ])
+    });
   }
 
   onSubmit() {
